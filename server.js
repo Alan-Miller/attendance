@@ -1,6 +1,6 @@
 const bodyParser = require('body-parser')
     , config = require('./config')
-    , server_port = config.server_port
+    , server_port = 3333
     , massive = require('massive')
     , moment = require('moment')()
     , app = require('express')().use(bodyParser.json());
