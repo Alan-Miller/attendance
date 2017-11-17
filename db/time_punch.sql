@@ -1,8 +1,8 @@
 DO
-$test$
+$punch$
 declare
-users json = $1;
-users_len int = json_array_length(users);
+    users json = $1;
+    users_len int = json_array_length(users);
 begin
 
 for i in 0..users_len - 1
@@ -22,8 +22,7 @@ loop
 end loop;
 
 end;
-$test$;
+$punch$;
 
--- select distinct on (username) here from time_punches where username = 'Emily Keator' order by username, id desc;
 -- delete from time_punches;
 select * from time_punches order by id desc;
