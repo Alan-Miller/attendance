@@ -6,10 +6,10 @@ const bodyParser = require('body-parser')
     , app = require('express')().use(bodyParser.json());
 
 const data = JSON.stringify([
-    {"username": "Brennon Schow", "here": true}, 
-    {"username": "Brock Pettyjohn", "here": true}, 
+    {"username": "Brennon Schow", "here": false}, 
+    {"username": "Brock Pettyjohn", "here": false}, 
     {"username": "Emily Keator", "here": false},
-    {"username": "Chris Lemke", "here": true}
+    {"username": "Chris Lemke", "here": false}
 ].map(person => Object.assign(person, {date_time: moment.format('MMM D YYYY H:mm')})));
 
 massive(config.URI).then(db => app.set('db', db));
