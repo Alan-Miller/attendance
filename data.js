@@ -1,3 +1,29 @@
+// const data = {
+//   "Joe Blank": true,
+//   "Brack Carmony": true,
+//   "Brennon Schow": true,
+//   "Megan Fisher": false,
+//   "Beth Telford": true,
+//   "Mason Galland": false,
+//   "Doug Maxfield": true,
+//   "Brock Pettyjohn": true,
+//   "Emily Keator": true
+// }
+
+// const data = [
+//     { username: "Joe Blank", here: true },
+//     { username: "Brack Carmony", here: true },
+//     { username: "Brennon Schow", here: true },
+//     { username: "Megan Fisher", here: false },
+//     { username: "Beth Telford", here: true },
+//     { username: "Mason Galland", here: false },
+//     { username: "Doug Maxfield", here: true },
+//     { username: "Brock Pettyjohn", here: true },
+//     { username: "Emily Keator", here: true }
+// ]
+
+
+
 // module.exports = {
 //   "Joe Blank": true,
 //   "Brack Carmony": true,

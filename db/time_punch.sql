@@ -1,29 +1,29 @@
 DO
 $test$
 declare
-peeps json = $1;
-peeps_len int = json_array_length(peeps);
+users json = $1;
+users_len int = json_array_length(users);
 begin
 
-for i in 0..peeps_len - 1
+for i in 0..users_len - 1
 loop
-    insert into pings (username, here) 
-    select peeps->i->>'ident', cast(peeps->i->>'here' as boolean)
-        where cast(peeps->i->>'here' as boolean) = true
+    insert into time_punches (username, here, date_time) 
+    select users->i->>'username', cast(users->i->>'here' as boolean), users->i->>'date_time'
+        where cast(users->i->>'here' as boolean) = true
         and not exists (
-            select distinct on (username) * from pings where username = peeps->i->>'ident' order by username, id desc
+            select distinct on (username) * from time_punches where username = users->i->>'username' order by username, id desc
         );
     
-    insert into pings (username, here) 
-    select peeps->i->>'ident', cast(peeps->i->>'here' as boolean)
-        where cast(peeps->i->>'here' as boolean) <> (
-            select distinct on (username) here from pings where username = peeps->i->>'ident' order by username, id desc
+    insert into time_punches (username, here, date_time) 
+    select users->i->>'username', cast(users->i->>'here' as boolean), users->i->>'date_time'
+        where cast(users->i->>'here' as boolean) <> (
+            select distinct on (username) here from time_punches where username = users->i->>'username' order by username, id desc
         );
 end loop;
 
 end;
 $test$;
 
--- select distinct on (username) here from pings where username = 'Emily Keator' order by username, id desc;
--- delete from pings;
-select * from pings order by id desc;
+-- select distinct on (username) here from time_punches where username = 'Emily Keator' order by username, id desc;
+-- delete from time_punches;
+-- select * from time_punches order by id desc;
