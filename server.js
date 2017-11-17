@@ -1,14 +1,16 @@
-const data = {
-  "Joe Blank": true,
-  "Brack Carmony": true,
-  "Brennon Schow": true,
-  "Megan Fisher": false,
-  "Beth Telford": true,
-  "Mason Galland": false,
-  "Doug Maxfield": true,
-  "Brock Pettyjohn": true,
-  "Emily Keator": true
-}
+const data = JSON.stringify([{"ident": "Brennon Schow", "here": false}, {"ident": "Brock Pettyjohn", "here": false}, {"ident": "Emily Keator", "here": true}]);
+
+// const data = {
+//   "Joe Blank": true,
+//   "Brack Carmony": true,
+//   "Brennon Schow": true,
+//   "Megan Fisher": false,
+//   "Beth Telford": true,
+//   "Mason Galland": false,
+//   "Doug Maxfield": true,
+//   "Brock Pettyjohn": true,
+//   "Emily Keator": true
+// }
 
 // const data = [
 //     { ident: "Joe Blank", here: true },
@@ -32,7 +34,9 @@ const bodyParser = require('body-parser')
 massive(config.URI).then(db => app.set('db', db));
 
 app.get('/api/ping', (req, res) => {
-    app.get('db').time_punch(data)
+    // console.log('db', app.get('db'))
+    // app.get('db').get_users([req.params.userID, req.query.value])
+    app.get('db').time_punch([data])
         .then(res => res)
         .catch(err => { console.log('err', err) });
 });

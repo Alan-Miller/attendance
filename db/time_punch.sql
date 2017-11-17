@@ -1,7 +1,7 @@
 DO
 $test$
 declare
-peeps json = '[{"ident": "Brennon Schow", "here": true}, {"ident": "Brock Pettyjohn", "here": true}, {"ident": "Emily Keator", "here": true}]';
+peeps json = $1;
 peeps_len int = json_array_length(peeps);
 begin
 
