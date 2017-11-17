@@ -8,7 +8,7 @@ const bodyParser = require('body-parser')
 const data = JSON.stringify([
     {"username": "Brennon Schow", "here": true}, 
     {"username": "Brock Pettyjohn", "here": true}, 
-    {"username": "Emily Keator", "here": true},
+    {"username": "Emily Keator", "here": false},
     {"username": "Chris Lemke", "here": true}
 ].map(person => Object.assign(person, {date_time: moment.format('MMM D YYYY H:mm')})));
 
@@ -16,7 +16,7 @@ massive(config.URI).then(db => app.set('db', db));
 
 app.get('/api/ping', (req, res) => {
     app.get('db').time_punch([data])
-        .then(res => res)
+        .then(response => res.status(200).send(response))
         .catch(err => { console.log('err', err) });
 });
 

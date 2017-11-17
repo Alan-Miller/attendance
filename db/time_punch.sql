@@ -26,4 +26,4 @@ $test$;
 
 -- select distinct on (username) here from time_punches where username = 'Emily Keator' order by username, id desc;
 -- delete from time_punches;
--- select * from time_punches order by id desc;
+select * from time_punches order by id desc;
