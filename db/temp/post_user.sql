@@ -5,5 +5,4 @@ where not exists (
     where mac_address = $2
 );
 
-
 select * from users order by id;

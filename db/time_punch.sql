@@ -3,26 +3,27 @@ $punch$
 declare
     users json = $1;
     users_len int = json_array_length(users);
-begin
+BEGIN
 
 for i in 0..users_len - 1
-loop
-    insert into time_punches (username, here, date_time) 
-    select users->i->>'username', cast(users->i->>'here' as boolean), users->i->>'date_time'
-        where cast(users->i->>'here' as boolean) = true
-        and not exists (
-            select distinct on (username) * from time_punches where username = users->i->>'username' order by username, id desc
+LOOP
+    -- add row if user is here for the first time
+    INSERT INTO time_punches (username, here, date_time) 
+    SELECT users->i->>'username', CAST(users->i->>'here' AS BOOLEAN), users->i->>'date_time'
+        WHERE CAST(users->i->>'here' AS BOOLEAN) = true
+        AND NOT EXISTS (
+            SELECT DISTINCT ON (username) * FROM time_punches WHERE username = users->i->>'username' ORDER BY username, id DESC
         );
     
-    insert into time_punches (username, here, date_time) 
-    select users->i->>'username', cast(users->i->>'here' as boolean), users->i->>'date_time'
-        where cast(users->i->>'here' as boolean) <> (
-            select distinct on (username) here from time_punches where username = users->i->>'username' order by username, id desc
+    -- add row if passed-in here value is different from last time's here value
+    INSERT INTO time_punches (username, here, date_time) 
+    SELECT users->i->>'username', CAST(users->i->>'here' AS BOOLEAN), users->i->>'date_time'
+        WHERE CAST(users->i->>'here' AS BOOLEAN) <> (
+            SELECT DISTINCT ON (username) here FROM time_punches WHERE username = users->i->>'username' ORDER BY username, id DESC
         );
-end loop;
+END LOOP;
 
-end;
+END;
 $punch$;
 
--- delete from time_punches;
-select * from time_punches order by id desc;
+SELECT * FROM time_punches ORDER BY id DESC;

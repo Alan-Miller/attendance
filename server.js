@@ -1,26 +1,23 @@
 const bodyParser = require('body-parser')
     , config = require('./config')
+    , data = require('./data')
     , server_port = 3333
     , massive = require('massive')
     , moment = require('moment')()
     , app = require('express')().use(bodyParser.json());
 
-const data = JSON.stringify([
-    {"username": "Brennon Schow", "here": false}, 
-    {"username": "Brock Pettyjohn", "here": false}, 
-    {"username": "Emily Keator", "here": false},
-    {"username": "Chris Lemke", "here": false}
-].map(person => Object.assign(person, {date_time: moment.format('MMM D YYYY H:mm')})));
-
 massive(config.URI).then(db => app.set('db', db));
 
-app.get('/api/ping', (req, res) => {
-    app.get('db').time_punch([data])
+app.post('/api/ping', (req, res) => {
+    app.get('db').time_punch([data.users])
         .then(response => res.status(200).send(response))
         .catch(err => { console.log('err', err) });
 });
 
 app.listen(
-    server_port, 
-    console.log(`Port ${server_port}, ${moment.format('MMM D YYYY, H:mm')}.`)
+    server_port,
+    console.log(`
+    Listening on port ${server_port}
+    Time: ${data.time}
+    `)
 );
